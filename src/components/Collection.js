@@ -5,6 +5,7 @@ import Download from './Download';
 import LazyLoad from 'react-lazyload';
 import MainContext from '../MainContext';
 import Brand from './Brand';
+import Loader from './Loader';
 
 
 function Collection(props) {
@@ -24,28 +25,28 @@ function Collection(props) {
 
 	return (
 		<main className="content">
-			<header className="header">
+		<header className="header">
 
-				<Link to="/" onClick={clearSelectedBrands}>
-					<a className="back-btn">
-						<GrLinkPrevious />
-						All Brands
-					</a>
-				</Link>
+			<Link to="/" onClick={clearSelectedBrands}>
+				<a className="back-btn">
+					<GrLinkPrevious />
+					All Brands
+				</a>
+			</Link>
 
-				{selectedBrands.length !== 0 && <Download  />}
-			</header>
-			<section className="brands">
-				{selectedBrands.map(slug => {
-					let brand = brands.find(brand => brand.slug === slug)
-					return (
-						<LazyLoad key={brand.slug} once={true} overflow={true} >
-							<Brand brand={brand}/>
-						</LazyLoad>
-					)
-				})}
-			</section>
-		</main>
+			{selectedBrands.length !== 0 && <Download />}
+		</header>
+		<section className="brands">
+			{selectedBrands.map(slug => {
+				let brand = brands.find(brand => brand.slug === slug)
+				return (
+					<LazyLoad key={brand.slug} once={true} overflow={true} placeholder={<Loader />}>
+						<Brand brand={brand}/>
+					</LazyLoad>
+				)
+			})}
+		</section>
+	</main>
 	)
 }
 
